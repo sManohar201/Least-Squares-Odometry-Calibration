@@ -11,6 +11,7 @@ find_package(Boost 1.71 REQUIRED COMPONENTS
 find_package(Eigen3 REQUIRED)
 
 include_directories(${PYTHON_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS})
 include_directories(include)
 
 set(SOURCE src/main.cpp
