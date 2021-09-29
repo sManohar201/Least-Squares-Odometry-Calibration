@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
 find_package(PythonLibs 3.0 REQUIRED)
-find_package(Boost 1.71 REQUIRED COMPONENTS
+find_package(Boost 1.71.0 REQUIRED COMPONENTS
               program_options)
 find_package(Eigen3 REQUIRED)
 
@@ -14,11 +14,13 @@ include_directories(${PYTHON_INCLUDE_DIRS})
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories(include)
 
-set(SOURCE src/main.cpp
-            src/least_squares.cpp)   
+set(SOURCE src/main.cpp)
+            # src/least_squares.cpp)   
 
 
 add_executable(${PROJECT_NAME} ${SOURCE})
-target_link_directories(${PROJECT_NAME} ${PYTHON_INCLUDE_DIRS})
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${PYTHON_INCLUDE_DIRS})
+
 target_link_libraries(${PROJECT_NAME} ${PYTHOND_LIBRARIES} Boost::program_options)
 
