@@ -5,7 +5,8 @@
 #include <fstream>
 #include <iomanip>
 #include <vector>
-#include <filesystem>
+#include <iostream>
+
 
 namespace LeastSquares
 {
@@ -18,7 +19,7 @@ namespace LeastSquares
        * 
        * @param[in] file_path - input file path
        */
-      FileReader(std::string &file_path);
+      FileReader(const std::string &file_path);
       /**
        * @brief Destroy the File Reader object
        */
@@ -32,28 +33,55 @@ namespace LeastSquares
        * @brief - reads through the input file and loads the data in a matrix.
        */
       void load_data();
+      /**
+       * @brief Get the data object
+       * 
+       * @return const Eigen::MatrixXd - data matrix
+       */
+      const Eigen::MatrixXd get_data() const;
+      
+      /**
+       * @brief - check if the dimension of other data matches with the current
+       * one
+       * @param[in] other - filereader object
+       */
+      bool check_dimension (const FileReader &other) const;
 
     private:
       /**
+       * @brief Get the rows object
+       * @return const size_t 
+       */
+      const size_t get_rows() const;
+      /**
+       * @brief Get the columns object
+       * @return const size_t 
+       */
+      const size_t get_columns() const; 
+      /**
+       * @brief - opens the file in the given file path.
+       */
+      void open_file();
+      /**
        * @brief - path of the file
        */
-      std::string file_name;
+      std::string file_name_;
       /**
        * @brief - stream object to read the input file
        */
-      std::ifstream file;
+      std::ifstream file_;
       /**
        * @brief - final data loaded as matrix
        */
-      Eigen::MatrixXd data;
+      Eigen::MatrixXd data_;
       /**
        * @brief - no of rows in the data
        */
-      size_t rows;
+      size_t rows_;
       /**
        * @brief - no of columns in the data
        */
-      size_t cols;
+      size_t cols_;
   };
 
 } // namespace LeastSquares
