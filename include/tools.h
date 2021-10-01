@@ -1,9 +1,7 @@
 #ifndef LEAST_SQUARES_TOOLS_H
 #define LEAST_SQUARES_TOOLS_H
 
-#include <eigen3/Eigen/Dense>
-#include <math.h>
-
+#include "read_files.h"
 
 
 namespace LeastSquares
@@ -62,7 +60,7 @@ namespace LeastSquares
     trajectory.row(0) = currentPose;
 
     Matrix3X3 transform_chain = poseToTransform(currentPose);
-    
+
     for (size_t i=0; i<odom.rows(); i++)
     {
       transform_chain = transform_chain * poseToTransform(odom.row(i));
