@@ -14,7 +14,7 @@ namespace LeastSquares
   /**
    * @brief - converts pose to transformation matrix
    * 
-   * @param[out] pose - 
+   * @param[in] pose - pose vector [x, y, theta]
    * @return Matrix3X3 
    */
   Matrix3X3 poseToTransform(const Vector1X3 &pose)
@@ -33,9 +33,9 @@ namespace LeastSquares
   }
 
   /**
-   * @brief 
+   * @brief - converts transform matrix to pose vector
    * 
-   * @param transform 
+   * @param[in] transform - transform matrix [T]
    * @return Vector1X3 
    */
   Vector1X3 transformToPose(const Matrix3X3 &transform)
@@ -46,6 +46,31 @@ namespace LeastSquares
     vector(2) = atan2(transform(1,0), transform(0,0));
     return vector;
   }
+
+  /**
+   * @brief - compute the trajectory of the robot by chaining up the odom information.
+   * 
+   * @param[in] odom - odometry measurements either the ground truth or scaned measurements
+   * @param[out] trajectory = final trajectory computed from the odom measurements 
+   */
+  void compute_trajectory(const Eigen::MatrixXd &odom, Eigen::MatrixXd &trajectory)
+  {
+    // final trajectory matrix to return
+    trajectory.resize(odom.rows()+1, odom.cols());
+    // this vector holds  the current pose and pose no 1.
+    Vector1X3 currentPose = Vector1X3::Zero();
+    trajectory.row(0) = currentPose;
+
+    Matrix3X3 transform_chain = poseToTransform(currentPose);
+    
+    for (size_t i=0; i<odom.rows(); i++)
+    {
+      transform_chain = transform_chain * poseToTransform(odom.row(i));
+      trajectory.row(i+1) = transformToPose(transform_chain);
+    }
+
+  }
+
 } //namespace LeastSquares
 
 #endif
