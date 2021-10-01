@@ -4,11 +4,13 @@
 #include <eigen3/Eigen/Dense>
 #include <math.h>
 
-typedef Eigen::Matrix3d Matrix3X3;
-typedef Eigen::RowVector3d Vector1X3;
+
 
 namespace LeastSquares
 {
+
+  typedef Eigen::Matrix3d Matrix3X3;
+  typedef Eigen::RowVector3d Vector1X3;
   /**
    * @brief - converts pose to transformation matrix
    * 
@@ -26,6 +28,7 @@ namespace LeastSquares
     matrix(1,1) = cos_theta;
     matrix(0,2) = pose(0);
     matrix(1,2) = pose(1);
+    matrix(2,2) = 1;
     return matrix;
   }
 
@@ -40,7 +43,7 @@ namespace LeastSquares
     Vector1X3 vector = Vector1X3::Zero();
     vector(0) = transform(0, 2);
     vector(1) = transform(1, 2);
-    vector(3) = atan2(transform(1,0), transform(0,0));
+    vector(2) = atan2(transform(1,0), transform(0,0));
     return vector;
   }
 } //namespace LeastSquares
