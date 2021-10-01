@@ -12,8 +12,9 @@ find_package(Eigen3 REQUIRED)
 
 include_directories(${PYTHON_INCLUDE_DIRS})
 include_directories(${Boost_INCLUDE_DIRS})
-include_directories(include)
+include_directories(include/)
 
+add_library(file_reader src/read_files.cpp)
 set(SOURCE src/main.cpp)
             # src/least_squares.cpp)   
 
@@ -22,5 +23,5 @@ add_executable(${PROJECT_NAME} ${SOURCE})
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${PYTHON_INCLUDE_DIRS})
 
-target_link_libraries(${PROJECT_NAME} ${PYTHOND_LIBRARIES} Boost::program_options)
+target_link_libraries(${PROJECT_NAME} file_reader ${PYTHOND_LIBRARIES} Boost::program_options)
 
