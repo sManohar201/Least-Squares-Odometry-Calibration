@@ -1,8 +1,7 @@
 #ifndef LEAST_SQUARES_TOOLS_H
 #define LEAST_SQUARES_TOOLS_H
 
-#include "read_files.h"
-
+#include <eigen3/Eigen/Dense>
 
 namespace LeastSquares
 {
@@ -66,7 +65,22 @@ namespace LeastSquares
       transform_chain = transform_chain * poseToTransform(odom.row(i));
       trajectory.row(i+1) = transformToPose(transform_chain);
     }
+  }
 
+  /**
+   * @brief - returns the corrected motions.
+   * 
+   * @param[in] parameters - calibration parameter
+   * @param[in] odom - odometry measurement to be calibrated
+   * @param[out] corrected_odom - corrected odometry measurement.
+   */
+  void apply_odometry_correction(const Matrix3X3 &parameters, const Eigen::MatrixXd &odom, Eigen::MatrixXd &corrected_odom)
+  {
+    corrected_odom.resize(odom.rows(), odom.cols());
+    for (size_t i=0; i<odom.rows(); i++)
+    {
+      corrected_odom.row(i) = (parameters*odom.row(i).transpose()).transpose();
+    }
   }
 
 } //namespace LeastSquares
