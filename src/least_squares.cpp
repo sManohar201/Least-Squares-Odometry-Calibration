@@ -13,33 +13,15 @@ void least_squares_calibrate_odometry(const Eigen::MatrixXd &grond_truth, const 
   for (size_t i = 0; i < grond_truth.rows(); i++)
   {
     Vector1X3 truth = grond_truth.row(i);
-    // std::cout << truth << std::endl;
-    // std::cout << "\n";
     Vector1X3 measure = measurements.row(i);
-    // std::cout << measure << std::endl;
-    // std::cout << "\n";
     calculate_error(truth, measure, calib_parameters, error);
-    // std::cout << error << std::endl;
-    // std::cout << "\n";
     calculate_jacobian(measure, J);
-    // std::cout << J << std::endl;
-    // std::cout << "\n";
     H = H + J.transpose() * J;
-    // std::cout << H << std::endl;
-    // std::cout << "\n";
     b = b + error.transpose() * J;
-    // std::cout << b << std::endl;
-    // std::cout << "\n";
   }
   Eigen::VectorXd delta = -H.inverse() * b.transpose();
-  // std::cout << delta << std::endl;
-  // std::cout << "\n";
   Eigen::Map<Eigen::MatrixXd> dX(delta.data(), 3, 3);
-  // std::cout << dX << std::endl;
-  // std::cout << "\n";
   calib_parameters = calib_parameters + dX.transpose();
-  // std::cout << calib_parameters << std::endl;
-  // std::cout << "\n";
 }
 
 void calculate_error(const Vector1X3 &truthX, const Vector1X3 &measureX, Matrix3X3 &calib_parameters,
