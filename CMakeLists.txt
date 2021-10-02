@@ -4,7 +4,7 @@ project(least_squares_calibration)
 
 set(CMAKE_CXX_STANDARD 11)
 
-find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+# find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
 find_package(PythonLibs 3.0 REQUIRED)
 find_package(Boost 1.71.0 REQUIRED COMPONENTS
               program_options)
@@ -15,10 +15,11 @@ include_directories(
               ${PYTHON_INCLUDE_DIRS}
               ${Boost_INCLUDE_DIRS}
 )
-
 add_library(file_reader src/read_files.cpp)
-set(SOURCE src/main.cpp)
-            # src/least_squares.cpp)   
+
+
+set(SOURCE src/main.cpp
+           src/least_squares.cpp)   
 
 
 add_executable(${PROJECT_NAME} ${SOURCE})
