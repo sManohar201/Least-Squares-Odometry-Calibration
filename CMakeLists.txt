@@ -19,7 +19,9 @@ add_library(file_reader src/read_files.cpp)
 
 
 set(SOURCE src/main.cpp
-           src/least_squares.cpp)   
+           src/least_squares.cpp
+           include/pbplot/pbPlots.cpp 
+           include/pbplot/supportLib.cpp)   
 
 
 add_executable(${PROJECT_NAME} ${SOURCE})
