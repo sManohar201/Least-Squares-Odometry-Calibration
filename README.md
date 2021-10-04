@@ -7,3 +7,4 @@ A calibration method for odometry of mobile robots based on nonlinear Least-squa
 
 ## Brief Explanation
 
+<img heigth="100" src="resources/LS.png">
