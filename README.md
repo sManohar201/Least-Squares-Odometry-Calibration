@@ -11,4 +11,5 @@ Calibration is the process of find the extrinsic and intrinsic parameters of the
 The steps involved in a least squares minimization is shown in the figure below. 
 <img heigth="100" src="resources/LS.png">
 
-<img height="550" src="resources/odometry-calibration-result.png">
+Final results for the given data is plotted in the image below.
+<img height="550" width="800" src="resources/odometry-calibration-result.png">
